@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("./firebase-key.json");
+const serviceAccount = require("./fir-node-react-firebase-adminsdk.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://firebase-node-react.firebaseio.com"
+  databaseURL: "https://fir-node-react.firebaseio.com"
 });
+

@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const admin = require("firebase-admin");
-require("../db");
+const serviceAccount = require("../fir-node-react-firebase-adminsdk.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://fir-node-react.firebaseio.com"
+});
 const db = admin.firestore();
 
 
@@ -40,13 +44,29 @@ router.get('/:id', async(req, res, next) => {
         next(e);
     }
 })
-
+router.get('/delete/:id', async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        if (!id) throw new Error('id is blank');
+        db.collection('notes').doc(id).delete()
+        .then(()=>{res.json({message:"deleted"})})
+        .catch((err)=>res.json({message:"error"}))
+        // res.json({
+            
+        //     message: "deleted"
+        // });
+    } catch(e) {
+        next(e);
+    }
+})
 router.post('/', async (req, res, next) => {
    
     try {
-        const text = req.body.name;
-        if (!text) throw new Error('Text is blank');
-        const data = { text };
+        const id = req.body.id;
+        const title = req.body.title;
+        const body = req.body.body;
+        if (!id) throw new Error('Text is blank');
+        const data = { id, title, body };
         const ref = await db.collection('notes').add(data);
         res.json({
             id: ref.id,

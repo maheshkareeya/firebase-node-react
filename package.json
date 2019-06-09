@@ -1,0 +1,19 @@
+{
+  "name": "@m-k/kariya",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maheshkareeya/firebase-node-react.git"
+  },
+  "author": "mahesh kariya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maheshkareeya/firebase-node-react/issues"
+  },
+  "homepage": "https://github.com/maheshkareeya/firebase-node-react#readme"
+}
