@@ -12,29 +12,42 @@ export default class MyTable extends React.Component{
 
 
 
-
-componentDidMount(){
+loadAllItems(){
     axios.get(`http://localhost:5000/api/`)
     .then(res => {
       const persons = res.data;
       this.setState({ persons });
-    })}
-
-    handleDelete = event => {
-        event.preventDefault();
-    
-        axios.delete(`http://localhost:5000/api/delete/${this.state.id}`)
+    })
+}
+componentDidMount(){
+this.loadAllItems();
+}
+    handleDelete = (memo) =>{
+       
+   
+       axios.get(`http://localhost:5000/api/delete/`+memo)
           .then(res => {
-            console.log(res);
-            console.log(res.data);
+            // console.log(res);
+            if(res.data.message === "deleted"){
+                axios.get(`http://localhost:5000/api/`)
+                .then(res => {
+                  const persons = res.data;
+                  this.setState({ persons });
+                })
+            }else{
+                console.log("notok");
+            }
           })
+          .catch((err)=>console.log(err))
+     
+
       }
 
       
     render(){
         return(
             <div>
-<Table varient="dark" striped bordered hover>
+<Table >
   <thead>
     <tr>
       <th>#</th>
@@ -50,8 +63,9 @@ componentDidMount(){
   </Dropdown.Toggle>
 
   <Dropdown.Menu>
+   
     <Dropdown.Item onClick={this.handleEdit}>Edit</Dropdown.Item>
-    <Dropdown.Item onClick={this.handleDelete}>Delete</Dropdown.Item>
+    <Dropdown.Item onClick={this.handleDelete.bind(this, person.id)}>Delete</Dropdown.Item>
   </Dropdown.Menu>
 </Dropdown></td></tr>)}
     
